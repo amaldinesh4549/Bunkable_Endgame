@@ -204,6 +204,7 @@ for z in range (len(subjects)):
 #print ("GLOBAL_ELECTIVES are :",global_electives)
 #print ("\nALL :",subjects,"\n")
 
+
 while(i<len(sorted_days_data)):
 	#for each entry in sorted_days_data...
 	focus_group=[]
@@ -238,7 +239,6 @@ while(i<len(sorted_days_data)):
 				for l in range (len(missing)):
 					if (focus_group[k][missing[l]]!="-----"):
 						out[missing[l]] = focus_group[k][missing[l]]
-
 	#print("OUT IS->",out)
 	#add to total class of each class in out
 	p=2
@@ -253,13 +253,14 @@ while(i<len(sorted_days_data)):
 #print("\n")
 
 #writing the absent hour count of a single person to a file
-count_file_one = open("single_one_count.txt","w")
 
+count_file_one = open("single_one_count.txt","w")
 for i in range (len(subjects)):
 	count_file_one.write("%s %s %s\n" %(subjects[i], "--", total[i]))
-
 count_file_one.close()
+
 #closing the previously opened file - single-one-count
+
 
 splitted=[]
 hour_count_file = open("ttcount.txt","r")
@@ -282,23 +283,51 @@ for i in range(len(subjects)):
 	for j in range(13):
 		if subjects[i] == splitted[j][0] :
 			percent = 100-((total[i]/int(splitted[j][1]))*100)
+			total_days=int(splitted[j][1])
+			present_days=total_days-total[i]
+			extra_day_count=0
 			if subjects[i] != "-----" and subjects[i] != "CS362" and subjects[i] != "CS368" and subjects[i] != "CS372" and subjects[i] != "CS366" :
-				if subjects[i] == "CS302":
-					print("DAA", "-->", "%.2f" %percent)
-				if subjects[i] == "CS304":
-					print("CD", "-->", "%.2f" %percent)
-				if subjects[i] == "CS306":
-					print("CN", "-->", "%.2f" %percent)
-				if subjects[i] == "CS308":
-					print("SEPM", "-->", "%.2f" %percent)
-				if subjects[i] == "HS300":
-					print("POM", "-->", "%.2f" %percent)
-				if subjects[i] == "CS332":
-					print("MP LAB", "-->", "%.2f" %percent)
-				if subjects[i] == "CS334":
-					print("NW LAB", "-->", "%.2f" %percent)
-				if subjects[i] == "CS352":
-					print("COMPREHENSIVE", "-->", "%.2f" %percent)
+
+				if percent < 75 :
+					extra_day_count1 = ((75*total_days)-(100*present_days))/25
+					extra_day_count = int(extra_day_count1+1)
+
+				if percent > 75 :
+					extra_day_count1 = ((100*present_days)-(75*total_days))/75
+					extra_day_count = int(extra_day_count1)
+
+				if subjects[i] == "CS302" and percent < 75:
+					print("DAA (CS302)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS302" and percent > 75:
+					print("DAA (CS302)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS304" and percent < 75:
+					print("CD (CS304)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS304" and percent > 75:
+					print("CD (CS304)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS306" and percent < 75:
+					print("CN (CS306)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS306" and percent > 75:
+					print("CN (CS306)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS308" and percent < 75:
+					print("SEPM (CS308)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS308" and percent > 75:
+					print("SEPM (CS308)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS332" and percent < 75:
+					print("MP LAB (CS332)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS332" and percent > 75:
+					print("MP LAB (CS332)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS334" and percent < 75:
+					print("NW LAB (CS334)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS334" and percent > 75:
+					print("NW LAB (CS334)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "HS300" and percent < 75:
+					print("POM (HS300)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "HS300" and percent > 75:
+					print("POM HS300", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS352" and percent < 75:
+					print("COMPREHENSIVE (CS352)", "-->", "%.2f" %percent , "You should ATTEND:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
+				if subjects[i] == "CS352" and percent > 75:
+					print("COMPREHENSIVE (CS352)", "-->", "%.2f" %percent , "You can BUNK:%d" %extra_day_count," class"," (%d" %total_days,"/","%d) " %present_days)
 
 
 timetable = [
